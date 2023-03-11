@@ -67,7 +67,6 @@ function App() {
         }
 
     }, [choiceOne, choiceTwo])
-    console.log(cards)
 
     // initialise les choix et incrémente le nombre de tours
     const resetTurn = () => {
@@ -94,6 +93,7 @@ function App() {
                 />
             ))}
         </div>
+        <p>Turns: {turns}</p>
       </div>
     </div>
   );

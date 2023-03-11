@@ -1,19 +1,21 @@
 import {useState} from "react";
 import './App.css';
+import SingleCard from "./components/SingleCard";
 
 const kanjiCards = [
-    {   "src": "/img/arbre.png" },
-    {   "src": "/img/argent.png" },
-    {   "src": "/img/bas.png" },
+   // {   "src": "/img/arbre.png" },
+   // {   "src": "/img/argent.png" },
+   // {   "src": "/img/bas.png" },
     {   "src": "/img/eau.png" },
     {   "src": "/img/est.png" },
     {   "src": "/img/feu.png" },
-    {   "src": "/img/jour.png" },
-    {   "src": "/img/lune.png" },
+   // {   "src": "/img/haut.png" }
+   // {   "src": "/img/jour.png" },
+   // {   "src": "/img/lune.png" },
     {   "src": "/img/nord.png" },
     {   "src": "/img/ouest.png" },
     {   "src": "/img/sud.png" },
-    {   "src": "/img/terre.png" }
+   // {   "src": "/img/terre.png" }
 ]
 
 function App() {
@@ -39,6 +41,11 @@ function App() {
       <div className="App">
         <h1>Kanji Match</h1>
         <button onClick={shuffleCards}>New Game</button>
+        <div className="card-grid">
+            {cards.map(card => (
+                <SingleCard key ={card.id} card={card}/>
+            ))}
+        </div>
       </div>
     </div>
   );

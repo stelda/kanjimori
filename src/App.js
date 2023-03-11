@@ -3,19 +3,19 @@ import './App.css';
 import SingleCard from "./components/SingleCard";
 
 const kanjiCards = [
-   // {   "src": "/img/arbre.png" },
-   // {   "src": "/img/argent.png" },
-   // {   "src": "/img/bas.png" },
-    {   "src": "/img/eau.png" },
-    {   "src": "/img/est.png" },
-    {   "src": "/img/feu.png" },
-   // {   "src": "/img/haut.png" }
-   // {   "src": "/img/jour.png" },
-   // {   "src": "/img/lune.png" },
-    {   "src": "/img/nord.png" },
-    {   "src": "/img/ouest.png" },
-    {   "src": "/img/sud.png" },
-   // {   "src": "/img/terre.png" }
+   // {   "src": "/img/arbre.png", matched: false },
+   // {   "src": "/img/argent.png", matched: false },
+   // {   "src": "/img/bas.png", matched: false },
+    {   "src": "/img/eau.png", matched: false },
+    {   "src": "/img/est.png", matched: false },
+    {   "src": "/img/feu.png", matched: false },
+   // {   "src": "/img/haut.png", matched: false }
+   // {   "src": "/img/jour.png", matched: false },
+   // {   "src": "/img/lune.png", matched: false },
+    {   "src": "/img/nord.png", matched: false },
+    {   "src": "/img/ouest.png", matched: false },
+    {   "src": "/img/sud.png", matched: false },
+   // {   "src": "/img/terre.png", matched: false }
 ]
 
 function App() {
@@ -48,16 +48,24 @@ function App() {
     useEffect(()=>{
         if (choiceOne && choiceTwo) {
             if (choiceOne.src === choiceTwo.src) {
-                console.log("Les cartes correspondent")
+                setCards(prevCards => {
+                    return prevCards.map(card => {
+                        if (card.src === choiceOne.src) {
+                            return {...card, matched:true}
+                        }
+                        else {
+                            return card
+                        }
+                    })
+                })
                 resetTurn()
             }
             else {
-                console.log("les cartes ne correspondent pas")
                 resetTurn()
             }
         }
     }, [choiceOne, choiceTwo])
-
+    console.log(cards)
 
     // initialise les choix et incrémente le nombre de tours
     const resetTurn = () => {

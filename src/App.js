@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import './App.css';
 import SingleCard from "./components/SingleCard";
 
@@ -22,8 +22,11 @@ function App() {
 
     const [cards, setCards] = useState([])
     const [turns, setTurns] = useState(0)
+    const [choiceOne, setChoiceOne] = useState(null)
+    const [choiceTwo, setChoiceTwo] = useState(null)
 
-    /*La fonction shuffleCards est définie.
+
+    /* La fonction shuffleCards est définie.
     Cette fonction ne prend pas d'argument et retourne un tableau de cartes mélangées.*/
     const shuffleCards = () => {
         const shuffledCards = [...kanjiCards, ...kanjiCards]
@@ -34,8 +37,36 @@ function App() {
         setTurns(0)
     }
 
-    console.log(cards, turns)
+    /* La fonction handleChoice prend une carte en paramètre
+    et utilise une expression conditionnelle ternaire pour déterminer si choiceOne a une valeur.*/
 
+    const handleChoice = (card) => {
+        choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
+    }
+
+    // compare deux cartes selectionnées
+    useEffect(()=>{
+        if (choiceOne && choiceTwo) {
+            if (choiceOne.src === choiceTwo.src) {
+                console.log("Les cartes correspondent")
+                resetTurn()
+            }
+            else {
+                console.log("les cartes ne correspondent pas")
+                resetTurn()
+            }
+        }
+    }, [choiceOne, choiceTwo])
+
+
+    // initialise les choix et incrémente le nombre de tours
+    const resetTurn = () => {
+        setChoiceOne(null)
+        setChoiceTwo(null)
+        setTurns(prevTurns => prevTurns +1)
+    }
+
+    // render
   return (
     <div className="App">
       <div className="App">
@@ -43,7 +74,11 @@ function App() {
         <button onClick={shuffleCards}>New Game</button>
         <div className="card-grid">
             {cards.map(card => (
-                <SingleCard key ={card.id} card={card}/>
+                <SingleCard
+                    key ={card.id}
+                    card={card}
+                    handleChoice={handleChoice}
+                />
             ))}
         </div>
       </div>

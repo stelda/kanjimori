@@ -1,9 +1,10 @@
 import "./SingleCard.css"
-export default function SingleCard({card, handleChoice, flipped, disabled}){
+export default function SingleCard({card, handleChoice, flipped, disabled, audioRef}){
 
     const handleClick = () => {
         if (!disabled){
             handleChoice(card)
+            audioRef.current.play();
         }
     }
 
@@ -16,6 +17,10 @@ export default function SingleCard({card, handleChoice, flipped, disabled}){
                     src="/img/cover.png"
                     onClick={handleClick}
                     alt="card back"/>
+                <audio ref={audioRef}>
+                    <source src="/sounds/drum.mp3" type="audio/mpeg" />
+                    <source src="/sounds/drum.wav" type="audio/wav" />
+                </audio>
             </div>
         </div>
     );

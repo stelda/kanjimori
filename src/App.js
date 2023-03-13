@@ -1,54 +1,58 @@
-import {useEffect, useState} from "react";
-import './App.css';
-import SingleCard from "./components/SingleCard";
+import {useEffect, useState, useRef} from "react"; // importe les hooks "useEffect", "useState" et "useRef" depuis la bibliothèque "react"
+import './App.css'; // importe le fichier CSS pour le style de l'application
+import SingleCard from "./components/SingleCard"; //// importe le composant "SingleCard" depuis le fichier "./components/SingleCard.js"
 
-const kanjiCards = [
-   // {   "src": "/img/arbre.png", matched: false },
-   // {   "src": "/img/argent.png", matched: false },
-   // {   "src": "/img/bas.png", matched: false },
-    {   "src": "/img/eau.png", matched: false },
-    {   "src": "/img/est.png", matched: false },
-    {   "src": "/img/feu.png", matched: false },
-   // {   "src": "/img/haut.png", matched: false }
-   // {   "src": "/img/jour.png", matched: false },
-   // {   "src": "/img/lune.png", matched: false },
-    {   "src": "/img/nord.png", matched: false },
-    {   "src": "/img/ouest.png", matched: false },
-    {   "src": "/img/sud.png", matched: false },
-   // {   "src": "/img/terre.png", matched: false }
-]
 
 function App() {
+
+//  =================================== data ===================================
+
+    const Cards = [
+        {   "src": "/img/arbre.png", matched: false },
+        {   "src": "/img/bas.png", matched: false },
+        {   "src": "/img/haut.png", matched: false },
+        {   "src": "/img/jour.png", matched: false },
+        {   "src": "/img/lune.png", matched: false },
+        {   "src": "/img/terre.png", matched: false },
+        {   "src": "/img/feu.png", matched: false },
+        {   "src": "/img/eau.png", matched: false },
+        {   "src": "/img/nord.png", matched: false },
+        {   "src": "/img/est.png", matched: false },
+        {   "src": "/img/sud.png", matched: false },
+        {   "src": "/img/ouest.png", matched: false },
+    ]
 
     const [cards, setCards] = useState([])
     const [turns, setTurns] = useState(0)
     const [choiceOne, setChoiceOne] = useState(null)
     const [choiceTwo, setChoiceTwo] = useState(null)
     const [disabled, setDisabled] = useState(false)
+    const audioRef = useRef(null);
 
-    /* La fonction shuffleCards est définie.
-    Cette fonction ne prend pas d'argument et retourne un tableau de cartes mélangées.*/
+// =================================== behaviors ===================================
+
+    /* définit la fonction shuffledCards qui retourne un tableau de cartes mélangées */
     const shuffleCards = () => {
-        const shuffledCards = [...kanjiCards, ...kanjiCards]
+        const shuffledCards = [...Cards, ...Cards]
             .sort(() => Math.random() - 0.5)
             .map((card) => ({...card, id: Math.random() }))
 
-        setChoiceOne(null)
-        setChoiceTwo(null)
-        setCards(shuffledCards)
-        setTurns(0)
+    setChoiceOne(null)
+    setChoiceTwo(null)
+    setCards(shuffledCards)
+    setTurns(0)
     }
 
-    /* La fonction handleChoice prend une carte en paramètre
-    et utilise une expression conditionnelle ternaire pour déterminer si choiceOne a une valeur.*/
-
+    /* définit la fonction handleChoice */
     const handleChoice = (card) => {
-        choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
+        choiceOne ? setChoiceTwo(card) : setChoiceOne(card) // si une carte a été choisie avant (stockée dans choiceOne)
+        // alors la fonction stocke la carte choisie en deuxième position dans l'état choiceTwo
+        // sinon, si aucune carte n'a été choisie avant, la fonction stocke la carte choisie en première position dans l'état choiceOne
     }
 
-    // compare deux cartes selectionnées
+    // Compares two selected cards
     useEffect(()=>{
-        if (choiceOne && choiceTwo) {
+        if (choiceOne && choiceTwo) {                           // if choice
             setDisabled(true)
             if (choiceOne.src === choiceTwo.src) {
                 setCards(prevCards => {
@@ -67,10 +71,9 @@ function App() {
                 setTimeout(() => resetTurn(), 1000)
             }
         }
-
     }, [choiceOne, choiceTwo])
 
-    // initialise les choix et incrémente le nombre de tours
+    // Reset choices and increments turns
     const resetTurn = () => {
         setChoiceOne(null)
         setChoiceTwo(null)
@@ -78,17 +81,17 @@ function App() {
         setDisabled(false)
     }
 
-    // commence automatiquement un jeu
+    // Starts a game automatically
     useEffect(() => {
         shuffleCards()
     }, [])
 
 
-    // render
+// =================================== render ===================================
   return (
     <div className="App">
       <div className="App">
-        <h1>Kanji Match</h1>
+        <h1>kanjimori</h1>
         <button onClick={shuffleCards}>New Game</button>
         <div className="card-grid">
             {cards.map(card => (
@@ -98,10 +101,13 @@ function App() {
                     handleChoice={handleChoice}
                     flipped={card === choiceOne || card === choiceTwo || card.matched}
                     disabled={disabled}
+                    audioRef={audioRef}
                 />
             ))}
         </div>
-        <p>Turns: {turns}</p>
+        <div>
+            <p>Turns: {turns}</p>
+        </div>
       </div>
     </div>
   );

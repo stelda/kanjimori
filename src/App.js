@@ -1,7 +1,6 @@
-import {useEffect, useState, useRef} from "react"; // importe les hooks "useEffect", "useState" et "useRef" depuis la bibliothèque "react"
-import './App.css'; // importe le fichier CSS pour le style de l'application
-import SingleCard from "./components/SingleCard"; //// importe le composant "SingleCard" depuis le fichier "./components/SingleCard.js"
-
+import {useEffect, useState, useRef} from "react";
+import './App.css';
+import SingleCard from "./components/SingleCard";
 
 function App() {
 
@@ -26,7 +25,7 @@ function App() {
     const [turns, setTurns] = useState(0)
     const [choiceOne, setChoiceOne] = useState(null)
     const [choiceTwo, setChoiceTwo] = useState(null)
-    const [disabled, setDisabled] = useState(false)
+    const [disabled, setDisabledUI] = useState(false)
     const audioRef = useRef(null);
 
 // =================================== behaviors ===================================
@@ -37,23 +36,21 @@ function App() {
             .sort(() => Math.random() - 0.5)
             .map((card) => ({...card, id: Math.random() }))
 
-    setChoiceOne(null)
-    setChoiceTwo(null)
-    setCards(shuffledCards)
-    setTurns(0)
+        setChoiceOne(null)
+        setChoiceTwo(null)
+        setCards(shuffledCards)
+        setTurns(0)
     }
 
     /* définit la fonction handleChoice */
     const handleChoice = (card) => {
-        choiceOne ? setChoiceTwo(card) : setChoiceOne(card) // si une carte a été choisie avant (stockée dans choiceOne)
-        // alors la fonction stocke la carte choisie en deuxième position dans l'état choiceTwo
-        // sinon, si aucune carte n'a été choisie avant, la fonction stocke la carte choisie en première position dans l'état choiceOne
+        choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
     }
 
     // Compares two selected cards
     useEffect(()=>{
-        if (choiceOne && choiceTwo) {                           // if choice
-            setDisabled(true)
+        if (choiceOne && choiceTwo) {
+            setDisabledUI(true)
             if (choiceOne.src === choiceTwo.src) {
                 setCards(prevCards => {
                     return prevCards.map(card => {
@@ -78,7 +75,7 @@ function App() {
         setChoiceOne(null)
         setChoiceTwo(null)
         setTurns(prevTurns => prevTurns +1)
-        setDisabled(false)
+        setDisabledUI(false)
     }
 
     // Starts a game automatically
@@ -89,7 +86,6 @@ function App() {
 
 // =================================== render ===================================
   return (
-    <div className="App">
       <div className="App">
         <h1>kanjimori</h1>
         <button onClick={shuffleCards}>New Game</button>
@@ -109,7 +105,6 @@ function App() {
             <p>Turns: {turns}</p>
         </div>
       </div>
-    </div>
   );
 }
 

@@ -3,7 +3,19 @@
   margin: 40px auto;
 }
 
+h1 {
+  font-family: "OrchideeMedium", Regular;
+}
+
+@font-face {
+  font-family: 'OrchideeMedium';
+  src: url('fonts/OrchideeMedium.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
 button {
+  font-family: "Orchidee Light";
   background: black;
   border: 2px solid #d4b465;
   border-radius: 6px;
@@ -20,6 +32,6 @@ button:hover {
 .card-grid {
   margin-top: 40px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
 }

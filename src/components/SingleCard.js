@@ -1,5 +1,5 @@
 import "./SingleCard.css"
-export default function SingleCard({card, handleChoice, flipped, disabled, audioRef}){
+export default function SingleCard({card, handleChoice, flipped, disabled, audioRef, character}){
 
     const handleClick = () => {
         if (!disabled){
@@ -21,6 +21,7 @@ export default function SingleCard({card, handleChoice, flipped, disabled, audio
                     <source src="/sounds/drum.mp3" type="audio/mpeg" />
                     <source src="/sounds/drum.wav" type="audio/wav" />
                 </audio>
+                {/*<p>{character}</p>*/}
             </div>
         </div>
     );

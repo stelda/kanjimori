@@ -1,6 +1,8 @@
 import {useEffect, useState, useRef} from "react";
-import './App.css';
+import RAPID_API_KEY from "./.env";
 import SingleCard from "./components/SingleCard";
+import './App.css';
+
 
 function App() {
 
@@ -21,12 +23,34 @@ function App() {
         {   "src": "/img/ouest.png", matched: false },
     ]
 
+    
+
     const [cards, setCards] = useState([])
     const [turns, setTurns] = useState(0)
     const [choiceOne, setChoiceOne] = useState(null)
     const [choiceTwo, setChoiceTwo] = useState(null)
     const [disabled, setDisabledUI] = useState(false)
     const audioRef = useRef(null);
+    const [fetchedCharacter, setFetchedCharacter] = useState("")
+
+    // API fetch
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': RAPID_API_KEY,
+            'X-RapidAPI-Host': 'kanjialive-api.p.rapidapi.com'
+        }
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch('https://kanjialive-api.p.rapidapi.com/api/public/search/advanced/?on=%E3%82%B7%E3%83%B3', options);
+            const data = await response.json();
+            setFetchedCharacter(data[0].kanji.character);
+        };
+        fetchData();
+    }, []);
+
 
 // =================================== behaviors ===================================
 
@@ -98,13 +122,15 @@ function App() {
                     flipped={card === choiceOne || card === choiceTwo || card.matched}
                     disabled={disabled}
                     audioRef={audioRef}
+                    character={fetchedCharacter}
+
                 />
             ))}
         </div>
         <div>
             <p>Turns: {turns}</p>
         </div>
-      </div>
+     </div>
   );
 }
 

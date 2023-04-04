@@ -1,8 +1,8 @@
 import "./SingleCard.css"
-export default function SingleCard({card, handleChoice, flipped, disabled, audioRef}){
+export default function SingleCard({card, handleChoice, flipped, disabledUI, audioRef}){
 
     const handleClick = () => {
-        if (!disabled){
+        if (!disabledUI){
             handleChoice(card)
             audioRef.current.play();
         }

@@ -1,5 +1,10 @@
 /* base styles */
 
+@font-face {
+  font-family: 'Orchidee Light';
+  src: url('../public/fonts/OrchideeLight.ttf');
+}
+
 body {
   font-family: "Orchidee Light","Helvetica Neue",Helvetica,Roboto,"Droid Sans",Arial,Verdana,sans-serif;
   margin: 0;
@@ -9,7 +14,4 @@ body {
   color: #eed5a6;
 }
 
-@font-face {
-  font-family: 'Orchidee Light';
-  src: url('fonts/OrchideeLight.ttf');
-}
+

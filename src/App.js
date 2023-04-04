@@ -26,7 +26,7 @@ function App() {
     const [turns, setTurns] = useState(0)
     const [choiceOne, setChoiceOne] = useState(null)
     const [choiceTwo, setChoiceTwo] = useState(null)
-    const [disabled, setDisabledUI] = useState(false)
+    const [disabledUI, setDisabledUI] = useState(false)
     
     const audioRef = useRef(null);
 
@@ -99,14 +99,14 @@ return (
                     card={card}
                     handleChoice={handleChoice}
                     flipped={card === choiceOne || card === choiceTwo || card.matched}
-                    disabled={disabled}
+                    disabledUI={disabledUI}
                     audioRef={audioRef}                    
                 />
             ))}
         </div>
-        <div>
-            <p>Turns: {turns}</p>
-        </div>
+        
+        <p>Turns: {turns}</p>
+
     </div>
 );
 }

@@ -95,7 +95,6 @@ return (
         <div className="card-grid">
             {cards.map(card => (
                 <SingleCard
-                    key ={card.id}
                     card={card}
                     handleChoice={handleChoice}
                     flipped={card === choiceOne || card === choiceTwo || card.matched}
